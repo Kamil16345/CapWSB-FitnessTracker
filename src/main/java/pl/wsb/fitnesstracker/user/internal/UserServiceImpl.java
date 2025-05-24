@@ -35,10 +35,17 @@ class UserServiceImpl implements UserService, UserProvider {
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
+    @Override
+    public List<User> findByEmailContainingIgnoreCase(final String email) {
+        return userRepository.findByEmailContainingIgnoreCase(email);
+    }
 
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

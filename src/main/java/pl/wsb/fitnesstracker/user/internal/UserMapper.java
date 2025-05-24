@@ -3,6 +3,8 @@ package pl.wsb.fitnesstracker.user.internal;
 import org.springframework.stereotype.Component;
 import pl.wsb.fitnesstracker.user.api.User;
 
+import java.util.List;
+
 @Component
 class UserMapper {
 
@@ -20,9 +22,10 @@ class UserMapper {
                 user.getLastName());
     }
 
-    UserIdAndEmailDto toIdAndEmailDto(User user) {
-        return new UserIdAndEmailDto(user.getId(),
-                user.getEmail());
+    List<UserIdAndEmailDto> toIdAndEmailDto(List<User> users) {
+        return users.stream()
+                .map(user -> new UserIdAndEmailDto(user.getId(), user.getEmail()))
+                .toList();
     }
 
     User toEntity(UserDto userDto) {

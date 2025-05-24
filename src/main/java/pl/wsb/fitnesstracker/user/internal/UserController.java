@@ -1,6 +1,7 @@
 package pl.wsb.fitnesstracker.user.internal;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
@@ -20,6 +21,7 @@ class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAllUsers() {
         return userService.findAllUsers()
                 .stream()
@@ -28,6 +30,7 @@ class UserController {
     }
 
     @GetMapping("/simple")
+    @ResponseStatus(HttpStatus.OK)
     public List<UserSimpleDto> getAllUsersBasic() {
         return userService.findAllUsers()
                 .stream()
@@ -36,6 +39,7 @@ class UserController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public UserDto getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUser(id);
         if (user.isEmpty()) {
@@ -45,23 +49,31 @@ class UserController {
     }
 
     @GetMapping("/email")
+    @ResponseStatus(HttpStatus.OK)
     public List<UserIdAndEmailDto> getUserByEmail(@RequestParam String email) {
-        Optional<User> user = userService.getUserByEmail(email);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User with email: " + email + " was not found");
+        List<User> users = userService.findByEmailContainingIgnoreCase(email);
+        if (users.isEmpty()) {
+            throw new UserNotFoundException("User with email containing: " + email + " was not found");
         }
-        UserIdAndEmailDto userByEmail = userMapper.toIdAndEmailDto(user.get());
-        return Collections.singletonList(userByEmail);
+        return userMapper.toIdAndEmailDto(users);
     }
 
     @PostMapping
-    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
-
-        // TODO: Implement the method to add a new user.
-        //  You can use the @RequestBody annotation to map the request body to the UserDto object.
-
-
-        return null;
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto addUser(@RequestBody UserDto userDto) {
+        User savedUser = userService.createUser(userMapper.toEntity(userDto));
+        return userMapper.toDto(savedUser);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+    }
+
+//    @PatchMapping
+//    public UserDto updateUser(@RequestBody UserDto userDto) throws InterruptedException {
+//        userService.
+//    }
 
 }
