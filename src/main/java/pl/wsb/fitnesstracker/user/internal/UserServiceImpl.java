@@ -1,5 +1,6 @@
 package pl.wsb.fitnesstracker.user.internal;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ class UserServiceImpl implements UserService, UserProvider {
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
+
     @Override
     public List<User> findByEmailContainingIgnoreCase(final String email) {
         return userRepository.findByEmailContainingIgnoreCase(email);
@@ -45,7 +47,21 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findAll();
     }
 
+    @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateById(Long id, UserDto userDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Could not find user with id: " + id + " to update!"));
+
+        if (userDto.firstName() != null) user.setFirstName(userDto.firstName());
+        if (userDto.lastName() != null) user.setLastName(userDto.lastName());
+        if (userDto.email() != null) user.setEmail(userDto.email());
+        if (userDto.birthdate() != null) user.setBirthdate(userDto.birthdate());
+
+        userRepository.save(user);
     }
 }

@@ -1,5 +1,6 @@
 package pl.wsb.fitnesstracker.user.api;
 
+
 import java.util.List;
 
 /**
@@ -13,4 +14,7 @@ public interface UserService {
     void deleteById(Long id);
 
     List<User> findByEmailContainingIgnoreCase(String email);
+
+    void updateById(Long id, pl.wsb.fitnesstracker.user.internal.UserDto userDto);
+
 }

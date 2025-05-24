@@ -1,6 +1,11 @@
 package pl.wsb.fitnesstracker.user.internal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.wsb.fitnesstracker.user.api.User;
 
 import java.util.List;
@@ -25,5 +30,4 @@ interface UserRepository extends JpaRepository<User, Long> {
                 .filter(user -> user.getEmail().toLowerCase().contains(email.toLowerCase()))
                 .toList();
     }
-
 }

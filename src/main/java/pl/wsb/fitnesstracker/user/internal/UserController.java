@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -71,9 +70,15 @@ class UserController {
         userService.deleteById(id);
     }
 
-//    @PatchMapping
-//    public UserDto updateUser(@RequestBody UserDto userDto) throws InterruptedException {
-//        userService.
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        userService.updateById(id, userDto);
+    }
+
+//    @GetMapping
+//    public List<UserDto> getAllUsersOlderThan(@PathVariable LocalDate date){
+//
 //    }
 
 }
