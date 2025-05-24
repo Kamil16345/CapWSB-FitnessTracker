@@ -76,9 +76,11 @@ class UserController {
         userService.updateById(id, userDto);
     }
 
-//    @GetMapping
-//    public List<UserDto> getAllUsersOlderThan(@PathVariable LocalDate date){
-//
-//    }
+    @GetMapping("/older/{date}")
+    public List<UserDto> getAllUsersOlderThan(@PathVariable LocalDate date){
+        return userService.findUsersOlderThan(date).stream()
+                .map(userMapper::toDto)
+                .toList();
+    }
 
 }

@@ -8,6 +8,7 @@ import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 import pl.wsb.fitnesstracker.user.api.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +64,10 @@ class UserServiceImpl implements UserService, UserProvider {
         if (userDto.birthdate() != null) user.setBirthdate(userDto.birthdate());
 
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findUsersOlderThan(LocalDate date) {
+        return userRepository.findUsersOlderThan(date);
     }
 }
