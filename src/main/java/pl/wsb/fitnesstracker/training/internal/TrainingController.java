@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.api.TrainingDto;
+import pl.wsb.fitnesstracker.user.api.User;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class TrainingController {
 
     private final TrainingServiceImpl trainingService;
+    private final TrainingMapper trainingMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -23,7 +25,8 @@ public class TrainingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Training createTraining(@RequestBody TrainingDto trainingDto) {
-        return trainingService.createTraining(trainingDto);
+    public TrainingDto createTraining(@RequestBody TrainingDto trainingDto) {
+        Training savedTraining = trainingService.createTraining(trainingMapper.toEntity(trainingDto));
+        return trainingMapper.toDto(savedTraining);
     }
 }

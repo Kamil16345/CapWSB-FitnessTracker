@@ -34,7 +34,7 @@ public class TrainingServiceImpl implements TrainingProvider {
     }
 
     @Override
-    public TrainingDto createTraining(TrainingDto trainingDto) {
-        return trainingRepository.save(trainingDto);
+    public Training createTraining(Training training) {
+        return trainingRepository.save(training);
     }
 }

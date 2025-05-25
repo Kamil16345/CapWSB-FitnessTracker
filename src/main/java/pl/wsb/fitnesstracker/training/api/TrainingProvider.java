@@ -16,6 +16,6 @@ public interface TrainingProvider {
 
     List<Training> getTrainings();
 
-    Training createTraining(TrainingDto trainingDto);
+    Training createTraining(Training training);
 
 }

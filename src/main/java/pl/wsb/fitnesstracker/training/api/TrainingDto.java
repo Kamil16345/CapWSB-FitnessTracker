@@ -1,19 +1,28 @@
 package pl.wsb.fitnesstracker.training.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
+import pl.wsb.fitnesstracker.user.api.UserDto;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-public record TrainingDto(@Nullable Long id, Date startTime, Date endTime,
-                          ActivityType activityType, Float distance, Float averageSpeed){}
-//                          @JsonFormat(pattern = "yyyy-MM-dd") LocalDate birthdate,) {
-
-
-//                    "userId": "%s",
-//                            "startTime": "2024-04-01T11:00:00",
-//                            "endTime": "2024-04-01T11:00:00",
-//                            "activityType": "RUNNING",
-//                            "distance": 10.52,
-//                            "averageSpeed": 8.2
+public record TrainingDto(
+        @Nullable Long id,
+        @Nullable UserDto user,
+        @Nullable Long userId,
+        @NotNull(message = "Add start time")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        Date startTime,
+        @NotNull(message = "Add end time")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        Date endTime,
+        @NotNull(message = "Add activity type")
+        ActivityType activityType,
+        @PositiveOrZero(message = "Distance must be positive or zero")
+        double distance,
+        @PositiveOrZero(message = "Average speed must be positive or zero")
+        double averageSpeed) {
+}
