@@ -1,5 +1,6 @@
 package pl.wsb.fitnesstracker.training.internal;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import pl.wsb.fitnesstracker.training.api.TrainingDto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +24,10 @@ public class TrainingController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Training> getTrainings() {
-        return trainingService.getTrainings();
+    public List<TrainingDto> getTrainings() {
+        return trainingService.getTrainings().stream()
+                .map(trainingMapper::toDto)
+                .toList();
     }
 
     @PostMapping

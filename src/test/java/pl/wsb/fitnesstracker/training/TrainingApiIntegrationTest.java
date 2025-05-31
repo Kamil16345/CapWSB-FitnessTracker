@@ -175,8 +175,8 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
         String requestBody = """
                 {
                     "userId": "%s",
-                    "startTime": "2024-04-01T11:00:00",
-                    "endTime": "2024-04-01T11:00:00",
+                    "startTime": "2024-04-01T11:00:00.000+00:00",
+                    "endTime": "2024-04-01T11:00:00.000+00:00",
                     "activityType": "RUNNING",
                     "distance": 10.52,
                     "averageSpeed": 8.2
@@ -202,8 +202,8 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
         String requestBody = """
                 {
                 "userId": "%s",
-                "startTime": "2022-04-01T10:00:00",
-                "endTime": "2022-04-01T11:00:00",
+                "startTime": "2022-04-01T10:00:00.000+00:00",
+                "endTime": "2022-04-01T11:00:00.000+00:00",
                 "activityType": "TENNIS",
                 "distance": 0.0,
                 "averageSpeed": 0.0

@@ -1,5 +1,6 @@
 package pl.wsb.fitnesstracker.training.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,9 +27,11 @@ public class Training {
     private User user;
 
     @Column(name = "start_time", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00", timezone = "UTC")
     private Date startTime;
 
     @Column(name = "end_time", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00", timezone = "UTC")
     private Date endTime;
 
     @Enumerated(EnumType.ORDINAL)
