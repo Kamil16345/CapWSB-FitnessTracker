@@ -14,10 +14,10 @@ public record TrainingDto(
         @Nullable UserDto user,
         @Nullable Long userId,
         @NotNull(message = "Add start time")
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00", timezone = "UTC")
         Date startTime,
         @NotNull(message = "Add end time")
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00", timezone = "UTC")
         Date endTime,
         @NotNull(message = "Add activity type")
         ActivityType activityType,
