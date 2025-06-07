@@ -9,4 +9,7 @@ import java.util.List;
 interface TrainingRepository extends JpaRepository<Training, Long> {
 
     List<Training> findByEndTimeAfter(Date endTimeAfter);
+
+    List<Training> findTrainingsByActivityType(ActivityType activityType);
+
 }

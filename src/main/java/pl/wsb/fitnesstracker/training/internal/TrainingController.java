@@ -49,4 +49,21 @@ public class TrainingController {
                 .map(trainingMapper::toDto)
                 .toList();
     }
+
+    @GetMapping("/activityType")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TrainingDto> getAllTrainingsByActivityType(@RequestParam ActivityType activityType) {
+        return trainingService.getTrainingsByActivityType(activityType).stream()
+                .map(trainingMapper::toDto)
+                .toList();
+    }
+
+    @PutMapping("/{trainingId}")
+    @ResponseStatus(HttpStatus.OK)
+    public TrainingDto updateTraining(@RequestBody @Valid TrainingDto trainingDto, @PathVariable String trainingId) {
+        Training training = trainingMapper.toEntity(trainingDto);
+        Training updatedTraining = trainingService.updateTraining(trainingId, training);
+        return trainingMapper.toDto(updatedTraining);
+    }
+
 }
