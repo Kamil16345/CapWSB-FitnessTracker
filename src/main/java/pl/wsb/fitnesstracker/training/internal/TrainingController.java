@@ -22,6 +22,10 @@ public class TrainingController {
     private final TrainingServiceImpl trainingService;
     private final TrainingMapper trainingMapper;
 
+    /**
+     * Retrieves a list of all trainings.
+     * Converts training entities to DTOs before returning them.
+     */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<TrainingDto> getTrainings() {
@@ -30,6 +34,10 @@ public class TrainingController {
                 .toList();
     }
 
+    /**
+     * Creates a new training record based on the provided training data.
+     * Returns the newly created training as a DTO with all generated fields.
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TrainingDto createTraining(@RequestBody TrainingDto trainingDto) {
@@ -37,6 +45,10 @@ public class TrainingController {
         return trainingMapper.toDto(savedTraining);
     }
 
+    /**
+     * Retrieves all finished trainings that occurred after the specified date.
+     * Date should be provided in 'yyyy-MM-dd' format.
+     */
     @GetMapping("/finished/{afterTime}")
     @ResponseStatus(HttpStatus.OK)
     public List<TrainingDto> getAllFinishedTrainingsAfterTime(@PathVariable String afterTime) throws ParseException {
@@ -50,6 +62,10 @@ public class TrainingController {
                 .toList();
     }
 
+    /**
+     * Retrieves all trainings filtered by the specified activity type.
+     * Activity type is provided as a request parameter.
+     */
     @GetMapping("/activityType")
     @ResponseStatus(HttpStatus.OK)
     public List<TrainingDto> getAllTrainingsByActivityType(@RequestParam ActivityType activityType) {
@@ -58,6 +74,10 @@ public class TrainingController {
                 .toList();
     }
 
+    /**
+     * Updates an existing training identified by the trainingId with new data.
+     * Returns the updated training as a DTO.
+     */
     @PutMapping("/{trainingId}")
     @ResponseStatus(HttpStatus.OK)
     public TrainingDto updateTraining(@RequestBody @Valid TrainingDto trainingDto, @PathVariable String trainingId) {
