@@ -7,7 +7,6 @@ import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.api.TrainingDto;
 import pl.wsb.fitnesstracker.training.api.TrainingProvider;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,25 @@ public class TrainingServiceImpl implements TrainingProvider {
     }
 
     @Override
-    public List<Training> getAllFinishedTrainingsAfterTime(Date afterTime){
+    public List<Training> getAllFinishedTrainingsAfterTime(Date afterTime) {
         return trainingRepository.findByEndTimeAfter(afterTime);
+    }
+
+    @Override
+    public List<Training> getTrainingsByActivityType(ActivityType activityType) {
+        return trainingRepository.findTrainingsByActivityType(activityType);
+    }
+
+    @Override
+    public Training updateTraining(String trainingId, Training training) {
+        training.update(
+                training.getUser(),
+                training.getStartTime(),
+                training.getEndTime(),
+                training.getActivityType(),
+                training.getDistance(),
+                training.getAverageSpeed()
+        );
+        return trainingRepository.save(training);
     }
 }
